@@ -2,6 +2,7 @@
 
 import io
 import itertools as it
+import pprint as pp
 import urllib.request
 import xml.etree.ElementTree as et
 
@@ -57,4 +58,4 @@ def extract(url):
     }
 
 
-print(extract('https://www.intgovforum.org/cms/wks2015/index.php/proposal/view_public/112'))
+pp.pprint(extract('https://www.intgovforum.org/cms/wks2015/index.php/proposal/view_public/112'))
