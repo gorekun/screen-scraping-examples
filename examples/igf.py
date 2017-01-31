@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 import io
-import itertools as it
 import pprint as pp
 import urllib.request
 import xml.etree.ElementTree as et
@@ -34,20 +33,7 @@ def extract(url):
     # description: second p tag, the only td tag, the fourth tr tag.
     description = table.findtext('./tr[4]/td/p[2]')
     # panels: second p tag, the only td tag, the fifth tr tag but separated with br tag.
-    panel_lines = list(table.find('./tr[5]/td/p[2]').itertext())
-    # group by empty line
-    panel_line_groups = [list(v) for k, v in it.groupby(panel_lines, lambda x: not x.strip()) if not k]
-    panels = []
-    # parse name, department and descriptions
-    for panel_line_group in panel_line_groups:
-        name = panel_line_group[0].strip()
-        department = panel_line_group[1].strip()
-        descriptions = [l.strip() for l in panel_line_group[2:]]
-        panels.append({
-            'name': name,
-            'department': department,
-            'descriptions': descriptions
-        })
+    panels = [line.strip() for line in table.find('./tr[5]/td/p[2]').itertext()]
 
     # return the result!
     return {
